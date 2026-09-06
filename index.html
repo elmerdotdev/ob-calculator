@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Obstetric & Pregnancy Calculators</title>
+
+    <!-- PWA Meta Tags & Manifest -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#6366f1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="OB Calc" />
+    <link rel="apple-touch-icon" href="assets/icons/icon.svg" />
+    <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg" />
+
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header class="app-header">
+        <h1>Obstetric Calculator Suite</h1>
+        <p class="subtitle">
+          Clinical calculators for estimated due date, gestational age, and
+          pregnancy BMI
+        </p>
+      </header>
+
+      <main class="tools-grid">
+        <!-- Tool 1: LMP Calculator -->
+        <a href="lmp-calculator.html" class="tool-card">
+          <div class="tool-icon">📅</div>
+          <div class="tool-info">
+            <h2>Due Date by Menstrual Period (LMP)</h2>
+            <p>
+              Calculate Estimated Due Date (EDD) and Gestational Age based on
+              the first day of your last period (Naegele's Rule).
+            </p>
+          </div>
+          <div class="arrow-icon">→</div>
+        </a>
+
+        <!-- Tool 2: Ultrasound Calculator -->
+        <a href="ultrasound-calculator.html" class="tool-card">
+          <div class="tool-icon">🔊</div>
+          <div class="tool-info">
+            <h2>Due Date by Ultrasound Scan</h2>
+            <p>
+              Derive EDD and current Gestational Age from reported ultrasound
+              scan date and gestational age.
+            </p>
+          </div>
+          <div class="arrow-icon">→</div>
+        </a>
+
+        <!-- Tool 3: Pregnancy BMI Calculator -->
+        <a href="bmi-calculator.html" class="tool-card">
+          <div class="tool-icon">⚖️</div>
+          <div class="tool-info">
+            <h2>Pregnancy BMI & Weight Gain</h2>
+            <p>
+              Determine pre-pregnancy BMI category and recommended total
+              pregnancy weight gain guidelines (IOM).
+            </p>
+          </div>
+          <div class="arrow-icon">→</div>
+        </a>
+      </main>
+
+      <footer class="app-footer">
+        <p class="disclaimer">
+          Note: These clinical tools provide estimations for informational
+          purposes. Always consult a licensed healthcare professional for
+          medical diagnosis and treatment.
+        </p>
+        <p class="copyright">Developed by Elmer Balbin 🧑🏻‍💻</p>
+      </footer>
+    </div>
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('./sw.js')
+            .then((reg) =>
+              console.log('Service Worker registered successfully:', reg.scope),
+            )
+            .catch((err) =>
+              console.error('Service Worker registration failed:', err),
+            );
+        });
+      }
+    </script>
+  </body>
+</html>

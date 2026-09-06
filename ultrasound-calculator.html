@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Due Date by Ultrasound Scan - OB Calculator</title>
+
+    <!-- PWA Meta Tags & Manifest -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#6366f1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="OB Calc" />
+    <link rel="apple-touch-icon" href="assets/icons/icon.svg" />
+    <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg" />
+
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <nav class="top-nav">
+        <a href="index.html" class="back-link">← Back to All Tools</a>
+      </nav>
+
+      <header class="app-header">
+        <h1>Due Date by Ultrasound</h1>
+        <p class="subtitle">
+          Derive Estimated Due Date (EDD) & current Gestational Age from an
+          ultrasound scan report
+        </p>
+      </header>
+
+      <main class="calculator-card">
+        <form id="calculator-form" onsubmit="return false;">
+          <div class="form-group">
+            <label for="scan-date">
+              <span class="label-text">Ultrasound Scan Date</span>
+            </label>
+            <div class="input-wrapper">
+              <input type="date" id="scan-date" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>
+              <span class="label-text"
+                >Ultrasound Reported Gestational Age (GA)</span
+              >
+            </label>
+            <div class="input-row">
+              <div class="input-wrapper">
+                <input
+                  type="number"
+                  id="us-weeks"
+                  min="0"
+                  max="42"
+                  placeholder="Weeks"
+                  required
+                />
+                <span class="input-suffix">weeks</span>
+              </div>
+              <div class="input-wrapper">
+                <input
+                  type="number"
+                  id="us-days"
+                  min="0"
+                  max="6"
+                  placeholder="Days (0-6)"
+                  value="0"
+                />
+                <span class="input-suffix">days</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="as-of-date">
+              <span class="label-text">As of Date</span>
+              <span class="sub-label">(Defaults to today)</span>
+            </label>
+            <div class="input-wrapper">
+              <input type="date" id="as-of-date" />
+            </div>
+          </div>
+        </form>
+
+        <div id="results" class="results-container hidden">
+          <div class="result-card primary-result">
+            <span class="result-badge">Estimated Due Date (EDD)</span>
+            <h2 id="edd-display">--</h2>
+            <p id="edd-formula-note" class="formula-note">
+              Derived: Scan Date + (280 days – Ultrasound GA)
+            </p>
+          </div>
+
+          <div class="results-grid">
+            <div class="result-card">
+              <span class="card-icon">📅</span>
+              <span class="card-label">Gestational Age Today</span>
+              <h3 id="ga-display">--</h3>
+              <p id="ga-days-total" class="sub-text">--</p>
+            </div>
+
+            <div class="result-card">
+              <span class="card-icon">🌱</span>
+              <span class="card-label">Current Trimester</span>
+              <h3 id="trimester-display">--</h3>
+              <p id="trimester-sub" class="sub-text">--</p>
+            </div>
+          </div>
+
+          <!-- Timeline Progress -->
+          <div class="progress-section">
+            <div class="progress-header">
+              <span>Pregnancy Progress</span>
+              <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div
+                id="progress-bar-fill"
+                class="progress-bar-fill"
+                style="width: 0%"
+              ></div>
+            </div>
+            <div class="progress-labels">
+              <span>0w (Derived LMP)</span>
+              <span>13w (1st Tri)</span>
+              <span>27w (2nd Tri)</span>
+              <span>40w (Due)</span>
+            </div>
+          </div>
+
+          <!-- Milestones Breakdown -->
+          <div class="milestones-card">
+            <h3>Key Pregnancy Milestones</h3>
+            <ul class="milestones-list">
+              <li>
+                <span class="milestone-name"
+                  >Derived Conception / LMP Equivalent</span
+                >
+                <span id="m-lmp" class="milestone-date">--</span>
+              </li>
+              <li>
+                <span class="milestone-name"
+                  >End of 1st Trimester (13w 6d)</span
+                >
+                <span id="m-tri1" class="milestone-date">--</span>
+              </li>
+              <li>
+                <span class="milestone-name"
+                  >End of 2nd Trimester (27w 6d)</span
+                >
+                <span id="m-tri2" class="milestone-date">--</span>
+              </li>
+              <li>
+                <span class="milestone-name"
+                  >Early / Full Term Starts (37w 0d)</span
+                >
+                <span id="m-term" class="milestone-date">--</span>
+              </li>
+              <li>
+                <span class="milestone-name">Estimated Due Date (40w 0d)</span>
+                <span id="m-edd" class="milestone-date">--</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="empty-state" class="empty-state">
+          <p>
+            Please enter the ultrasound scan date and reported gestational age
+            above to compute the due date.
+          </p>
+        </div>
+      </main>
+
+      <footer class="app-footer">
+        <p>
+          <strong>Clinical Practice Note:</strong> Early ultrasound EDD is
+          preferred over LMP when there is a significant discrepancy.
+        </p>
+        <p class="disclaimer">
+          Note: This calculator provides an estimation only. Consult your
+          healthcare provider for clinical medical advice.
+        </p>
+      </footer>
+    </div>
+
+    <script src="assets/js/ultrasound-script.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('./sw.js')
+            .then((reg) =>
+              console.log('Service Worker registered successfully:', reg.scope),
+            )
+            .catch((err) =>
+              console.error('Service Worker registration failed:', err),
+            );
+        });
+      }
+    </script>
+  </body>
+</html>

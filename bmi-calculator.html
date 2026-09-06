@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pregnancy BMI & Weight Gain Calculator - OB Calculator</title>
+
+    <!-- PWA Meta Tags & Manifest -->
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#6366f1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="OB Calc" />
+    <link rel="apple-touch-icon" href="assets/icons/icon.svg" />
+    <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg" />
+
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <nav class="top-nav">
+        <a href="index.html" class="back-link">← Back to All Tools</a>
+      </nav>
+
+      <header class="app-header">
+        <h1>Pregnancy BMI & Weight Gain</h1>
+        <p class="subtitle">
+          Calculate pre-pregnancy BMI & recommended weight gain guidelines (IOM)
+        </p>
+      </header>
+
+      <main class="calculator-card">
+        <!-- Unit Selection Toggle -->
+        <div class="unit-toggle">
+          <button type="button" id="unit-metric-btn" class="unit-btn active">
+            Metric (cm, kg)
+          </button>
+          <button type="button" id="unit-imperial-btn" class="unit-btn">
+            Imperial (ft/in, lbs)
+          </button>
+        </div>
+
+        <form id="calculator-form" onsubmit="return false;">
+          <!-- Metric Inputs -->
+          <div id="metric-inputs">
+            <div class="form-group">
+              <label for="height-cm">Height</label>
+              <div class="input-wrapper">
+                <input
+                  type="number"
+                  id="height-cm"
+                  min="100"
+                  max="250"
+                  placeholder="e.g. 165"
+                />
+                <span class="input-suffix">centimeters (cm)</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="weight-kg">Pre-Pregnancy Weight</label>
+              <div class="input-wrapper">
+                <input
+                  type="number"
+                  id="weight-kg"
+                  step="0.1"
+                  min="30"
+                  max="300"
+                  placeholder="e.g. 60"
+                />
+                <span class="input-suffix">kilograms (kg)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Imperial Inputs -->
+          <div id="imperial-inputs" class="hidden">
+            <div class="form-group">
+              <label>Height</label>
+              <div class="input-row">
+                <div class="input-wrapper">
+                  <input
+                    type="number"
+                    id="height-ft"
+                    min="3"
+                    max="8"
+                    placeholder="Feet"
+                  />
+                  <span class="input-suffix">ft</span>
+                </div>
+                <div class="input-wrapper">
+                  <input
+                    type="number"
+                    id="height-in"
+                    min="0"
+                    max="11"
+                    placeholder="Inches"
+                  />
+                  <span class="input-suffix">in</span>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="weight-lbs">Pre-Pregnancy Weight</label>
+              <div class="input-wrapper">
+                <input
+                  type="number"
+                  id="weight-lbs"
+                  step="0.1"
+                  min="60"
+                  max="600"
+                  placeholder="e.g. 132"
+                />
+                <span class="input-suffix">pounds (lbs)</span>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div id="results" class="results-container hidden">
+          <div class="result-card primary-result">
+            <span class="result-badge">Pre-Pregnancy BMI</span>
+            <h2 id="bmi-val-display">--</h2>
+            <p id="bmi-cat-display" class="formula-note">--</p>
+          </div>
+
+          <div class="results-grid">
+            <div class="result-card">
+              <span class="card-icon">🎯</span>
+              <span class="card-label">Recommended Weight Gain</span>
+              <h3 id="gain-range-display">--</h3>
+              <p class="sub-text">Total throughout pregnancy (IOM)</p>
+            </div>
+
+            <div class="result-card">
+              <span class="card-icon">📈</span>
+              <span class="card-label">2nd & 3rd Trimester Rate</span>
+              <h3 id="gain-rate-display">--</h3>
+              <p class="sub-text">Average weekly target</p>
+            </div>
+          </div>
+
+          <!-- Reference Table Card -->
+          <div class="milestones-card">
+            <h3>IOM Weight Gain Recommendations Summary</h3>
+            <ul class="milestones-list">
+              <li>
+                <span class="milestone-name">Underweight (&lt; 18.5)</span>
+                <span class="milestone-date">12.5 – 18.0 kg (28 – 40 lbs)</span>
+              </li>
+              <li>
+                <span class="milestone-name">Normal weight (18.5 – 24.9)</span>
+                <span class="milestone-date">11.5 – 16.0 kg (25 – 35 lbs)</span>
+              </li>
+              <li>
+                <span class="milestone-name">Overweight (25.0 – 29.9)</span>
+                <span class="milestone-date">7.0 – 11.5 kg (15 – 25 lbs)</span>
+              </li>
+              <li>
+                <span class="milestone-name">Obesity (≥ 30.0)</span>
+                <span class="milestone-date">5.0 – 9.0 kg (11 – 20 lbs)</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="empty-state" class="empty-state">
+          <p>
+            Please enter your height and pre-pregnancy weight above to compute
+            BMI and recommended weight gain.
+          </p>
+        </div>
+      </main>
+
+      <footer class="app-footer">
+        <p>
+          <strong>Guideline Reference:</strong> US Institute of Medicine (IOM) &
+          ACOG Weight Gain Guidelines during Pregnancy.
+        </p>
+        <p class="disclaimer">
+          Note: Guidelines apply to single pregnancies. Twin/multiple
+          pregnancies require individualized clinical consultation.
+        </p>
+      </footer>
+    </div>
+
+    <script src="assets/js/bmi-script.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('./sw.js')
+            .then((reg) =>
+              console.log('Service Worker registered successfully:', reg.scope),
+            )
+            .catch((err) =>
+              console.error('Service Worker registration failed:', err),
+            );
+        });
+      }
+    </script>
+  </body>
+</html>
