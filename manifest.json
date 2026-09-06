@@ -1,6 +1,6 @@
 {
-  "name": "OB Due Date & Gestational Age Calculator",
-  "short_name": "OB Calc",
+  "name": "Obstetric Calculator Suite",
+  "short_name": "OB Calculator",
   "description": "Clinical pregnancy calculator for due date, gestational age, and pregnancy BMI.",
   "start_url": "./index.html",
   "display": "standalone",
