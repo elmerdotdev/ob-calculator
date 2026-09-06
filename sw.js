@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ob-calculator-v14';
+const CACHE_NAME = 'ob-calculator-v15';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -45,37 +45,42 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch Event: Cache First Strategy with Network Fallback
+// Fetch Event: Stale-While-Revalidate Strategy with Background Update
 self.addEventListener('fetch', (event) => {
   // Only intercept GET requests
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(event.request)
-        .then((networkResponse) => {
-          if (
-            !networkResponse ||
-            networkResponse.status !== 200 ||
-            networkResponse.type !== 'basic'
-          ) {
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.match(event.request).then((cachedResponse) => {
+        // 1. Trigger background network fetch to update cache for next time
+        const fetchPromise = fetch(event.request)
+          .then((networkResponse) => {
+            if (
+              networkResponse &&
+              networkResponse.status === 200 &&
+              networkResponse.type === 'basic'
+            ) {
+              cache.put(event.request, networkResponse.clone());
+            }
             return networkResponse;
-          }
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
+          })
+          .catch(() => {
+            // Network failure is expected when offline; safe to ignore here
           });
-          return networkResponse;
-        })
-        .catch(() => {
-          // Fallback to index.html if navigating offline
+
+        // 2. Return cached response instantly if available, otherwise wait on the network
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+
+        return fetchPromise.catch(() => {
+          // Fallback to index.html if navigating offline and asset isn't in cache
           if (event.request.mode === 'navigate') {
-            return caches.match('./index.html');
+            return cache.match('./index.html');
           }
         });
+      });
     }),
   );
 });
