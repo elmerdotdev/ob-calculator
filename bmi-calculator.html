@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pregnancy BMI & Weight Gain Calculator - OB Calculator</title>
+    <title>BMI Calculator - OB Calculator</title>
 
     <!-- PWA Meta Tags & Manifest -->
     <link rel="manifest" href="manifest.json" />
@@ -29,9 +29,9 @@
       </nav>
 
       <header class="app-header">
-        <h1>Pregnancy BMI & Weight Gain</h1>
+        <h1>BMI Calculator</h1>
         <p class="subtitle">
-          Calculate pre-pregnancy BMI & recommended weight gain guidelines (IOM)
+          Calculate Body Mass Index (BMI) and classification
         </p>
       </header>
 
@@ -63,7 +63,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="weight-kg">Pre-Pregnancy Weight</label>
+              <label for="weight-kg">Weight</label>
               <div class="input-wrapper">
                 <input
                   type="number"
@@ -106,7 +106,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label for="weight-lbs">Pre-Pregnancy Weight</label>
+              <label for="weight-lbs">Weight</label>
               <div class="input-wrapper">
                 <input
                   type="number"
@@ -124,25 +124,9 @@
 
         <div id="results" class="results-container hidden">
           <div class="result-card primary-result">
-            <span class="result-badge">Pre-Pregnancy BMI</span>
+            <span class="result-badge">Body Mass Index</span>
             <h2 id="bmi-val-display">--</h2>
             <p id="bmi-cat-display" class="formula-note">--</p>
-          </div>
-
-          <div class="results-grid">
-            <div class="result-card">
-              <span class="card-icon">🎯</span>
-              <span class="card-label">Recommended Weight Gain</span>
-              <h3 id="gain-range-display">--</h3>
-              <p class="sub-text">Total throughout pregnancy (IOM)</p>
-            </div>
-
-            <div class="result-card">
-              <span class="card-icon">📈</span>
-              <span class="card-label">2nd & 3rd Trimester Rate</span>
-              <h3 id="gain-rate-display">--</h3>
-              <p class="sub-text">Average weekly target</p>
-            </div>
           </div>
 
           <!-- Reference Table Card -->
@@ -196,20 +180,18 @@
 
         <div id="empty-state" class="empty-state">
           <p>
-            Please enter your height and pre-pregnancy weight above to compute
-            BMI and recommended weight gain.
+            Please enter your height and weight above to compute BMI.
           </p>
         </div>
       </main>
 
       <footer class="app-footer">
         <p>
-          <strong>Guideline Reference:</strong> US Institute of Medicine (IOM) &
-          ACOG Weight Gain Guidelines during Pregnancy.
+          <strong>Guideline Reference:</strong> World Health Organization (WHO) &
+          Asia-Pacific BMI Classifications.
         </p>
         <p class="disclaimer">
-          Note: Guidelines apply to single pregnancies. Twin/multiple
-          pregnancies require individualized clinical consultation.
+          Note: Body Mass Index (BMI) is a standard calculation for adults.
         </p>
       </footer>
     </div>

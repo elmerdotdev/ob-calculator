@@ -17,8 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const bmiValDisplay = document.getElementById('bmi-val-display');
   const bmiCatDisplay = document.getElementById('bmi-cat-display');
-  const gainRangeDisplay = document.getElementById('gain-range-display');
-  const gainRateDisplay = document.getElementById('gain-rate-display');
 
   let currentUnit = 'metric'; // 'metric' or 'imperial'
 
@@ -76,42 +74,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const roundedBmi = bmi.toFixed(1);
     let category = "";
-    let gainKg = "";
-    let gainLbs = "";
-    let weeklyRate = "";
 
     if (bmi < 18.5) {
       category = "Underweight (< 18.5 kg/m²)";
-      gainKg = "12.5 – 18.0 kg";
-      gainLbs = "28 – 40 lbs";
-      weeklyRate = "0.44 – 0.58 kg/wk (1.0 – 1.3 lbs/wk)";
     } else if (bmi <= 24.9) {
       category = "Normal Weight (18.5 – 24.9 kg/m²)";
-      gainKg = "11.5 – 16.0 kg";
-      gainLbs = "25 – 35 lbs";
-      weeklyRate = "0.35 – 0.50 kg/wk (0.8 – 1.0 lbs/wk)";
     } else if (bmi <= 29.9) {
       category = "Overweight (25.0 – 29.9 kg/m²)";
-      gainKg = "7.0 – 11.5 kg";
-      gainLbs = "15 – 25 lbs";
-      weeklyRate = "0.23 – 0.33 kg/wk (0.5 – 0.7 lbs/wk)";
+    } else if (bmi <= 34.9) {
+      category = "Obesity Class I (30.0 – 34.9 kg/m²)";
+    } else if (bmi <= 39.9) {
+      category = "Obesity Class II (35.0 – 39.9 kg/m²)";
     } else {
-      category = "Obesity (≥ 30.0 kg/m²)";
-      gainKg = "5.0 – 9.0 kg";
-      gainLbs = "11 – 20 lbs";
-      weeklyRate = "0.17 – 0.27 kg/wk (0.4 – 0.6 lbs/wk)";
+      category = "Obesity Class III (≥ 40.0 kg/m²)";
     }
 
     bmiValDisplay.textContent = `${roundedBmi} kg/m²`;
     bmiCatDisplay.textContent = category;
-
-    if (currentUnit === 'metric') {
-      gainRangeDisplay.textContent = gainKg;
-    } else {
-      gainRangeDisplay.textContent = gainLbs;
-    }
-
-    gainRateDisplay.textContent = weeklyRate;
 
     resultsContainer.classList.remove('hidden');
     emptyState.classList.add('hidden');
