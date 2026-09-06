@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ob-calculator-v12';
+const CACHE_NAME = 'ob-calculator-v14';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
