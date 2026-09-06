@@ -45,7 +45,7 @@ body {
 
 /* Nav Header for tool pages */
 .top-nav {
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 .back-link {
@@ -322,6 +322,10 @@ body {
   .results-grid {
     grid-template-columns: 1fr;
   }
+
+  .tool-icon {
+    display: none;
+  }
 }
 
 .card-icon {
@@ -475,7 +479,7 @@ body {
   color: var(--text-muted);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .disclaimer,
